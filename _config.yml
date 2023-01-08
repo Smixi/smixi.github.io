@@ -23,9 +23,8 @@ email: sismixx@hotmail.fr
 description: >- # this means to ignore newlines until "baseurl:"
   This blog is just to document myself learning new stuff, when I have time. Implementing (or trying to) well-known or less-known concepts/algorithm or trying out new tools.
   I am a simple French developper that loves technology and wants to improve itself.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  Smixi
+remote_theme: "mmistakes/minimal-mistakes@4.24.0"
 
 author:
   name     : "Sami Tahri"
@@ -38,10 +37,12 @@ author:
       url: "https://github.com/Smixi"
 
 # Build settings
-remote_theme: "mmistakes/minimal-mistakes@4.24.0"
 plugins:
-  - jekyll-remote-theme
+  - jekyll-paginate
   - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jemoji
   - jekyll-include-cache
 
 kramdown:
@@ -55,7 +56,7 @@ kramdown:
   enable_coderay: false
 
 search_full_content: true
-
+# repository: smixi/smixi.github.io
 defaults:
   # _posts
   - scope:
