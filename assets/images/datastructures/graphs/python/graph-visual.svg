@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="670" height="600" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <marker id="a" overflow="visible" orient="auto">
+  <path transform="scale(.6) rotate(180) translate(0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" stroke="#000" stroke-linejoin="round"/>
+ </marker>
+ <g marker-end="url(#a)" stroke="#000" stroke-width="7">
+  <path d="m95 460.01 111.15-159.47"/>
+  <path d="m508.34 86.665-196.83 116.07"/>
+  <path d="m575 360.01-49.145-201.49"/>
+  <path d="m248.34 240.01 257.41 94.557"/>
+  <path d="m248.34 240.01 44.194 201.33"/>
+  <path d="m575 360.01-203.38 116.95"/>
+ </g>
+ <g fill="#fff" stroke="#0017ff" stroke-width="7">
+  <circle cx="248.34" cy="240.01" r="60"/>
+  <circle cx="95" cy="460.01" r="60"/>
+  <circle cx="308.34" cy="513.33" r="60"/>
+  <circle cx="575" cy="360" r="60"/>
+  <circle cx="508.34" cy="86.665" r="60"/>
+ </g>
+ <g font-family="DejaVu Sans" font-weight="bold" text-anchor="middle">
+  <g font-size="30">
+   <text x="303" y="362">60</text>
+   <text x="439" y="418">32</text>
+   <text x="140" y="368">7</text>
+   <text x="385" y="140">10</text>
+   <text x="410" y="282">12</text>
+   <text x="576" y="253">20</text>
+  </g>
+  <g font-size="70">
+   <text x="248" y="266">A</text>
+   <text x="94" y="486">E</text>
+   <text x="306" y="539">D</text>
+   <text x="575" y="386">C</text>
+   <text x="507" y="112">B</text>
+  </g>
+ </g>
+</svg>
