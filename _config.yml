@@ -55,6 +55,10 @@ kramdown:
   smart_quotes: lsquo,rsquo,ldquo,rdquo
   enable_coderay: false
 
+head_scripts:
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+  - /assets/js/mathjax.js
+
 search_full_content: true
 # repository: smixi/smixi.github.io
 defaults:
