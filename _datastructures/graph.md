@@ -65,9 +65,9 @@ We will take each nodes, and for each, get all the links and the associated node
 
 {% include figure image_path="/assets/images/datastructures/graphs/python/graph-adjacency-list.svg" alt="adjacency matrix" %}{: .align-center }
 
-### Adjacency Set
+### Adjacency Map
 
-Adjacency set is using the same principle has Adjacency List, storing only links related to each node. This difference is that instead of using a list, we use a mapping. Instead of iterating through each neighbors one by one, we have constant time access by using a map function, like hashing. 
+Adjacency map is using the same principle has Adjacency List, storing only links related to each node. This difference is that instead of using a list, we use a mapping. Instead of iterating through each neighbors one by one, we have constant time access by using a map function, like hashing. 
 
 ### Why should I use Adjacency Matrix or Adjacency List ?
 
@@ -75,7 +75,7 @@ You may ask yourself, if there is multiple representations, is there one better 
 
 The answer is yes ... and no ! In fact, It just depends on what type of operations you will perform on the graph. Let's compare their space and time [complexity](https://en.wikipedia.org/wiki/Computational_complexity#Time)). n is for nodes, l for links, v for the number of links of a given node.
 
-|  | Adjacency Matrix | Adjacency List | Adjacency Set |
+|  | Adjacency Matrix | Adjacency List | Adjacency Map |
 |---|---|---|---|
 | Space Complexity | O(n²) | O(n+l) | O(n+l) |
 | Adding link | O(1) | O(1) | O(1) |
@@ -88,10 +88,38 @@ Ok, so we can explain how we figured out those complexities and when we can use 
 #### Space Complexity
 
 Obviously, the Matrix will always have an array allocated to store all links between each nodes, so you will have n*n space taken.
-For List and Set, we store only nodes and their neighbors: O(n+l). In the case we have fully connected graph (every node are connected), then we go back to the O(n²).
+For List and Map, we store only nodes and their neighbors: O(n+l). In the case we have fully connected graph (every node are connected), then we go back to the O(n²).
+
+#### Time complexity
+
+##### Adding a Link
+- Matrix: To add a link between node i and node j, we simply put the value in the matrix at position $$M_{i, j}$$ and $$M_{j, i}$$. Time complexity is $$O(1)$$. Note: Adding multiple link for the same pair of node means you must store a list in the matrix, which means your representation change.
+- ADJ Lis: Here, we simply add an element to the neighbor list of both nodes, so $$O(1)$$.
+- ADJ Map: Same as adjacency list, adding an element to the neighbor list of both nodes, but using a map.
+
+List and Maps implementation is not completly $$O(1)$$. In average it is, but List and Maps might be implemented differently and their amortized time may vary. For example in Python, a dictionnary may have to resize its internal storage list to support new keys. [Look here for time complexities of python common datastructures](https://wiki.python.org/moin/TimeComplexity)
+{: .notice--success}
+
+#### Removing a link:
+- Matrix: Same as adding a link, you just remove the entry in the matrix at position $$M_{i, j}$$ and $$M_{j, i}$$, which is in $$O(1)$$.
+- List: Removing an element of the list is in $$O(v)$$ where v is the neighbor list size.
+- Map: This time removing an element from a dictionnary is in $$O(1)$$, but again, amortized time (to resize the map) is in $$O(v)$$
+
+#### Checking if link exists:
+
+- Matrix: Again, Matrix is in O(1) because we only go to the indices $$M_{i, j}$$ or $$M_{j, i}$$
+- List: Removing a link means removing the entry in the list of each node of the link. Removing a element in a list is $$O(v)$$.
+- Map: Same as List, but using in a map, deletion is in constant time $$O(1)$$.
+#### Iterating throughs neighbors | O(n) | O(v) | O(v) |
+
+A common operation in graph is finding all links which is connected to a specific node.
+
+- Matrix: Here, we will need to check an entire row (or column), so it is in $$O(n)$$
+- List and Maps: Because the adjacency list and map by construct only store the links of a specific node, we already know the entire list of links connected to a specific node. So getting the list is in $$O(1)$$, and iterating over it is in $$O(v)$$
 
 
-
+So after all, we can choose depending on operations we want to perform a representation of our graph. Of course, if we are only going to read the graph, we could build multiple representation of our graph (or convert it) to support the desired operations we want to perform.
+{: .notice--success}
 
 ### Python implementation of undirected graph using Adjacency Sets:
 
