@@ -1,7 +1,7 @@
 ---
-title: "Adjacency Sets Graph implementation in Python"
+title: "Adjacency Map Graph implementation in Python"
 collection: datastructures
-excerpt: "Creating a Graph in python using Adjacency Sets"
+excerpt: "Creating a Graph in python using Adjacency Map"
 ---
 
 ## What is a Graph datastructure ?
