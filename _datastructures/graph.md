@@ -1,5 +1,5 @@
 ---
-title: "Adjacency Map Graph implementation in Python"
+title: "Graph implementation in Python using Adjancency Set"
 collection: datastructures
 excerpt: "Creating a Graph in python using Adjacency Map"
 ---
@@ -93,7 +93,7 @@ For List and Map, we store only nodes and their neighbors: O(n+l). In the case w
 #### Time complexity
 
 ##### Adding a Link
-- Matrix: To add a link between node i and node j, we simply put the value in the matrix at position $$M_{i, j}$$ and $$M_{j, i}$$. Time complexity is $$O(1)$$. Note: Adding multiple link for the same pair of node means you must store a list in the matrix, which means your representation change.
+- Matrix: To add a link between node i and node j, we simply put the value in the matrix at position $$M_{i, j}$$ and $$M_{j, i}$$. Time complexity is $$O(1)$$. Note: We will not handle Multigraph here, which is the fact that two nodes can be connected multiple times together.
 - ADJ Lis: Here, we simply add an element to the neighbor list of both nodes, so $$O(1)$$.
 - ADJ Map: Same as adjacency list, adding an element to the neighbor list of both nodes, but using a map.
 
@@ -215,7 +215,7 @@ def test_undirect_graph_add_link():
     assert g.nodes == {1: 1, 2: 1}
 ```
 
-This tests checks that we can properly add a link between two nodes, one already exists (and its value must not be modified) and the other doesn't.
+This test checks that we can properly add a link between two nodes, one already exists (and its value must not be modified) and the other doesn't.
 
 Executing the tests gives: 
 
@@ -303,3 +303,11 @@ graph TestGraph {
 ```
 {% include image.html
 max-width="300px" file="/assets/images/datastructures/graphs/python/render-undirected.svg" alt="graph guess dict" %}{: .align-center }
+
+### Implementing directed graph
+
+This will be documented later
+
+### Supporting MultiGraph
+
+This will be documented later
