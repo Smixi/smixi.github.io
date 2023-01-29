@@ -310,4 +310,67 @@ This will be documented later
 
 ### Supporting MultiGraph
 
-This will be documented later
+To support a multigraph, we need to add an indirection for links, and we must be able to uniquely identify a link between two nodes. To do that, instead of the mapping `node_id_1 -> node_id_2 -> link_value`, we make the mapping `node_id_1 -> node_id_2 -> link_id -> link_value`.
+
+Let's see our modifications:
+
+```python
+def __init__(self) -> None:
+        super().__init__()
+        self.nodes: Dict[NodeId, NV] =  dict()
+        self.links: Dict[NodeId, Dict[NodeId, Dict[LinkId, EV]]] = dict()
+```
+
+We change the mapping as we said.
+
+We do not need to change node definitions nor adding or removing logic (adding or removing a node will still create the empty dict or remove all links).
+
+```python
+def add_link(self, node1: NodeId, node2: NodeId, link_id: LinkId, link_value: EV = None, node1_value: NV = None, node2_value: NV = None):
+        ...        
+        # Add the link in the adjency dict for both node. Must ensure the dict indirection exist before hands.
+        if node2 not in self.links[node1]:
+            self.links[node1][node2] = {}
+            self.links[node2][node1] = {}
+        self.links[node1][node2][link_id] = link_value
+        self.links[node2][node1][link_id] = link_value
+```
+
+We must ensure that the dict is initialized for the last mapping to work. Note that we use a new argument, here the user must provide a unique id (between node1 and node2) to be able to search and remove the node.
+
+We can keep the same function as in single graph, but rename it to `remove_links`, because it knows remove all links between two nodes.
+
+```python
+def remove_link(self, node1: NodeId, node2: NodeId, link_id: LinkId):
+    ...
+    del self.links[node1][node2][link_id]
+    # Remove key if there is no more item in the dictionnary
+    if len(self.links[node1][node2]) == 0:
+        del self.links[node1][node2]
+    if node1 != node2: # A link can connect the node to itself, but we can't delete it twice.
+        del self.links[node2][node1][link_id]
+        if len(self.links[node2][node1]) == 0:
+            del self.links[node2][node1]
+```
+
+Here, we have the same logic as before, checking for self reference. But, we also remove any node to node mapping when there is no more links in final dict mapping.
+
+Finally, we can update our graph rendering function:
+```python
+def render(self, filename: str, graph_name: str, format: str = "svg"):
+        ...        
+        added_links = set()
+        for source_node, dest_nodes in self.links.items():
+            for dest_node, links in dest_nodes.items():
+                for link_id, link_value in links.items():
+                    # Check if the link is already setup in the graph
+                    if (dest_node, source_node) in added_links:
+                        continue
+                    added_links.add((source_node, dest_node))
+                    dot.edge(str(source_node), str(dest_node) , label=str(link_value))
+        dot.render(filename)
+```
+
+We just add the last mapping to support multigraph.
+
+
