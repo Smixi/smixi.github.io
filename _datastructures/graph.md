@@ -310,6 +310,8 @@ This will be documented later
 
 ### Supporting MultiGraph
 
+Code is available here : https://github.com/Smixi/learning-datastructures/blob/main/python/graph/undirected_graph/multigraph.py
+
 To support a multigraph, we need to add an indirection for links, and we must be able to uniquely identify a link between two nodes. To do that, instead of the mapping `node_id_1 -> node_id_2 -> link_value`, we make the mapping `node_id_1 -> node_id_2 -> link_id -> link_value`.
 
 Let's see our modifications:
