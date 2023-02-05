@@ -304,10 +304,6 @@ graph TestGraph {
 {% include image.html
 max-width="300px" file="/assets/images/datastructures/graphs/python/render-undirected.svg" alt="graph guess dict" %}{: .align-center }
 
-### Implementing directed graph
-
-This will be documented later
-
 ### Supporting MultiGraph
 
 Code is available here : https://github.com/Smixi/learning-datastructures/blob/main/python/graph/undirected_graph/multigraph.py
@@ -374,5 +370,38 @@ def render(self, filename: str, graph_name: str, format: str = "svg"):
 ```
 
 We just add the last mapping to support multigraph.
+
+### Implementing directed graph
+
+Directed graph implementation is similar to undirected graph. This time, when adding a link from a node to another, we don't update the other way:
+
+```python
+def add_link(self, node1: NodeId, node2: NodeId, link_id: LinkId, link_value: EV = None, node1_value: NV = None, node2_value: NV = None):
+    # Check that each node exists first.
+    if node1 not in self.nodes:
+        self.add_node(node1, node1_value)
+    if node2 not in self.nodes:
+        self.add_node(node2, node2_value)
+    
+    # Add the link in the adjency dict for the source node. Must ensure the dict indirection exist before hands.
+    if node2 not in self.links[node1]:
+        self.links[node1][node2] = {}
+    self.links[node1][node2][link_id] = link_value
+    
+    if node1 not in self.reverse_link_lookup[node2]:
+        self.reverse_link_lookup[node2][node1] = set()
+    self.reverse_link_lookup[node2][node1].add(link_id)
+```
+
+As you can see, we also introduce a new attribute in our object: reverse_link_lookup. You may ask, why ? 
+In fact, deletion of a node is become tricky. Remember, when we delete a node, also delete all associated links, we wouldn't want to have a graph where links point to a node that doesn't exists ! To achieve that, we simply keep track as in an undirected graph the reverse relationships. If we don't do that, we would need to iterate on all nodes if there is a connection with the deleted node in order to delete the associated links.
+The logic with multigraph and the nested dict is similar.
+
+Finally, we can render an example of a directed graph: 
+
+{% include image.html
+max-width="300px" file="/assets/images/datastructures/graphs/python/direct_graph_test.svg" alt="graph guess dict" %}{: .align-center }
+
+The full code is available [here](https://github.com/Smixi/learning-datastructures/blob/main/python/graph/directed_graph/multigraph.py)
 
 
